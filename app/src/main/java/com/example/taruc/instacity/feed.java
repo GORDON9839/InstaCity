@@ -17,14 +17,21 @@ public class feed extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_feed:
+
+                   // mTextMessage.setText(R.string.title_feed);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_activities:
+                    //mTextMessage.setText(R.string.title_activities);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_create:
+                    //mTextMessage.setText(R.string.title_create);
+                    return true;
+                case R.id.navigation_favourite:
+                    //mTextMessage.setText(R.string.title_favourite);
+                    return true;
+                case R.id.navigation_profile:
+                    //mTextMessage.setText(R.string.title_profile);
                     return true;
             }
             return false;
@@ -36,9 +43,10 @@ public class feed extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        mTextMessage = findViewById(R.id.message);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
 }
