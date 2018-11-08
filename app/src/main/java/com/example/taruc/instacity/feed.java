@@ -1,52 +1,119 @@
 package com.example.taruc.instacity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class feed extends AppCompatActivity {
+public class feed extends AppCompatActivity{
 
-    private TextView mTextMessage;
+    feedFragment feedFrag;
+    activityFragment activityFrag;
+    createFragment createFrag;
+    favouriteFragment favouriteFrag;
+    profileFragment profileFrag;
+    BottomNavigationView bnv;
+    ViewPager vp;
+    MenuItem prevMenuItem;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+
             switch (item.getItemId()) {
                 case R.id.navigation_feed:
-
-                   // mTextMessage.setText(R.string.title_feed);
-                    return true;
+                    vp.setCurrentItem(0);
+                    break;
                 case R.id.navigation_activities:
-                    //mTextMessage.setText(R.string.title_activities);
-                    return true;
+                    vp.setCurrentItem(1);
+                    break;
+
                 case R.id.navigation_create:
-                    //mTextMessage.setText(R.string.title_create);
+                    vp.setCurrentItem(2);
                     return true;
                 case R.id.navigation_favourite:
-                    //mTextMessage.setText(R.string.title_favourite);
+                    vp.setCurrentItem(3);
                     return true;
                 case R.id.navigation_profile:
-                    //mTextMessage.setText(R.string.title_profile);
+                    vp.setCurrentItem(4);
                     return true;
             }
             return false;
+
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
 
-        mTextMessage = findViewById(R.id.message);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bnv = (BottomNavigationView) findViewById(R.id.navigation);
+        vp = (ViewPager) findViewById(R.id.pager);
+        bnv.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (prevMenuItem != null) {
+                    prevMenuItem.setChecked(false);
+                } else {
+                    bnv.getMenu().getItem(0).setChecked(false);
+                }
+                Log.d("page", "onPageSelected: " + position);
+                bnv.getMenu().getItem(position).setChecked(true);
+                prevMenuItem = bnv.getMenu().getItem(position);
+
+            }
+
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+        setupViewPager(vp);
+
+
+
+
 
     }
+    private void setupViewPager(ViewPager viewPager) {
+        PagerAdapter viewPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        feedFrag = new feedFragment();
+        activityFrag = new activityFragment();
+        createFrag = new createFragment();
+        favouriteFrag = new favouriteFragment();
+        profileFrag = new profileFragment();
+        viewPagerAdapter.addFragment(feedFrag);
+        viewPagerAdapter.addFragment(activityFrag);
+        viewPagerAdapter.addFragment(createFrag);
+        viewPagerAdapter.addFragment(favouriteFrag);
+        viewPagerAdapter.addFragment(profileFrag);
+        viewPager.setAdapter(viewPagerAdapter);
+    }
+
+
+
 
 }
