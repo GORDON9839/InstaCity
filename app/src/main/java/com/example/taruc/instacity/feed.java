@@ -1,5 +1,6 @@
 package com.example.taruc.instacity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class feed extends AppCompatActivity{
 
     feedFragment feedFrag;
@@ -23,6 +32,9 @@ public class feed extends AppCompatActivity{
     BottomNavigationView bnv;
     ViewPager vp;
     MenuItem prevMenuItem;
+
+    private FirebaseAuth mAuth;
+    private DatabaseReference usersRef;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -56,10 +68,14 @@ public class feed extends AppCompatActivity{
     };
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
+
+        mAuth = FirebaseAuth.getInstance();
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         bnv = (BottomNavigationView) findViewById(R.id.navigation);
         vp = (ViewPager) findViewById(R.id.pager);
@@ -98,6 +114,54 @@ public class feed extends AppCompatActivity{
 
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser == null){
+            SendUserToLoginActivity();
+        }else if(currentUser!=null){
+            CheckUserExistence();
+        }
+    }
+
+
+
+
+    private void CheckUserExistence() {
+        final String current_user_id = mAuth.getCurrentUser().getUid();
+
+        usersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.hasChild(current_user_id)){
+                    SendUserToSetupActivity();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void SendUserToSetupActivity() {
+        Intent setupIntent = new Intent(feed.this,SetupActivity.class);
+        setupIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(setupIntent);
+        finish();
+    }
+
+    private void SendUserToLoginActivity() {
+        Intent loginIntent = new Intent(feed.this,LoginActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(loginIntent);
+        finish();
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         PagerAdapter viewPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         feedFrag = new feedFragment();

@@ -25,7 +25,7 @@ public class mainSplash extends AppCompatActivity {
         setContentView(R.layout.main_splash);
 
         img = (ImageView) findViewById(R.id.img);
-        final Intent intent = new Intent(this,RegisterActivity.class);
+        final Intent intent = new Intent(this,LoginActivity.class);
 
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.splash_transition);
         img.startAnimation(anim);
