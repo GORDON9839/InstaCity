@@ -3,23 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:layout_height="match_parent"
+    tools:context=".SetupActivity">
 
-    tools:context=".RegisterActivity">
 
     <ImageView
-        android:id="@+id/registerIcon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:id="@+id/setupProfileImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        app:srcCompat="@drawable/logo" />
+        android:src="@drawable/user" />
 
     <EditText
 
-        android:id="@+id/register_email"
+        android:id="@+id/setupUsername"
         android:layout_width="251dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -29,52 +28,53 @@
         android:layout_marginTop="220dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/email"
+        android:drawableLeft="@drawable/username"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:hint="Username"
+
+        android:inputType="textMultiLine"
         android:padding="10dp"
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/registerPassword"
+        android:id="@+id/setupFullname"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_email"
+        android:layout_below="@id/setupUsername"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/password"
+        android:drawableLeft="@drawable/user36px"
         android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
+        android:hint="Full Name"
+        android:inputType="textMultiLine"
         android:padding="10dp"
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/registerConfirmPassword"
+        android:id="@+id/setupCountry"
         android:layout_width="242dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/registerPassword"
+        android:layout_below="@id/setupFullname"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="25dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/password"
+        android:drawableLeft="@drawable/country"
         android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
+        android:hint="Country"
+        android:inputType="textMultiLine"
         android:padding="10dp"
         android:textSize="15sp" />
 
     <Button
 
-        android:id="@+id/register"
+        android:id="@+id/setupSaveInformation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -88,9 +88,9 @@
         android:layout_marginBottom="80dp"
         android:background="@drawable/button"
         android:padding="15dp"
-        android:text="Register"
+        android:text="Save"
         android:textColor="@color/pureWhite"
         android:textSize="18sp"
-
         android:textStyle="bold" />
+
 </RelativeLayout>

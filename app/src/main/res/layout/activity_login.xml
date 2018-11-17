@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-
-    tools:context=".RegisterActivity">
+    tools:context=".LoginActivity">
 
     <ImageView
-        android:id="@+id/registerIcon"
+        android:id="@+id/loginIcon"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_alignParentTop="true"
@@ -19,7 +18,7 @@
 
     <EditText
 
-        android:id="@+id/register_email"
+        android:id="@+id/loginEmail"
         android:layout_width="251dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -37,14 +36,14 @@
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/registerPassword"
+        android:id="@+id/loginPassword"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_email"
+        android:layout_below="@id/loginEmail"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="25dp"
         android:background="@drawable/inputs"
         android:drawableLeft="@drawable/password"
@@ -54,28 +53,11 @@
         android:padding="10dp"
         android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/registerConfirmPassword"
-        android:layout_width="242dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/registerPassword"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/password"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:textSize="15sp" />
 
     <Button
 
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
+        android:id="@+id/login"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
 
@@ -85,12 +67,28 @@
         android:layout_marginStart="60dp"
 
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="100dp"
         android:background="@drawable/button"
+
         android:padding="15dp"
-        android:text="Register"
+        android:text="Login"
         android:textColor="@color/pureWhite"
         android:textSize="18sp"
-
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/registerLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-90dp"
+        android:text="Dont have an Account?Register Now"
+        android:textAlignment="center"
+        android:textColor="@color/pureWhite"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
 </RelativeLayout>
