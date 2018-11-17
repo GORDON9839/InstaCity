@@ -59,17 +59,13 @@
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="60dp"
-
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="100dp"
         android:background="@drawable/button"
-
         android:padding="15dp"
         android:text="Login"
         android:textColor="@color/pureWhite"

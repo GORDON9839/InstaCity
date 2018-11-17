@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -135,7 +136,9 @@ public class feed extends AppCompatActivity{
         usersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("hihi", "dataSnapshot.hasChild(current_user_id)");
                 if(!dataSnapshot.hasChild(current_user_id)){
+
                     SendUserToSetupActivity();
 
                 }
@@ -178,6 +181,13 @@ public class feed extends AppCompatActivity{
     }
 
 
+    public void logout_listener(View view) {
+        Intent logoutIntent = new Intent(feed.this,LoginActivity.class);
+        logoutIntent.putExtra("logout",true);
+        logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(logoutIntent);
+        FirebaseAuth.getInstance().signOut();
+        finish();
 
-
+    }
 }

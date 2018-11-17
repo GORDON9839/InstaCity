@@ -43,13 +43,13 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    /*protected void onStart(){
+    protected void onStart(){
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             SendUserToMainActivity();
         }
-    }*/
+    }
 
     private void CreateNewAccount() {
         String UserEmail=email.getText().toString();
