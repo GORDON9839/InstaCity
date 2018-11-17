@@ -8,4 +8,10 @@
     <string name="Project_name">Insta City</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="total_like">50</string>
+    <string name ="total_bookmark">20</string>
+    <string name ="username">Johnson</string>
+    <string name ="bookmark">show bookmark</string>
+    <string name ="like_view">show like</string>
+    <string name ="user_icon">show user profile</string>
 </resources>
