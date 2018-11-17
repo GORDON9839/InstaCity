@@ -2,13 +2,17 @@ package com.example.taruc.instacity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,18 +21,28 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 public class SetupActivity extends AppCompatActivity {
 
     private EditText Username, Fullname,Country;
     private Button saveInformation;
-    private ImageView profileImage;
+    private ImageButton profileImage;
 
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
     private ProgressDialog loadingBar;
+    private static final int Gallery_Pick=1;
+    private Uri ImageUri;
+
+    private StorageReference PostsImagesReference;
+    private String saveCurrentDate,saveCurrentTime,post,downloadUrl;
 
     String currentUserID;
     @Override
@@ -38,15 +52,16 @@ public class SetupActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
         loadingBar = new ProgressDialog(this);
+        PostsImagesReference = FirebaseStorage.getInstance().getReference();
 
 
         Username = (EditText) findViewById(R.id.setupUsername);
         Fullname = (EditText) findViewById(R.id.setupFullname);
         Country = (EditText) findViewById(R.id.setupCountry);
         saveInformation = (Button) findViewById(R.id.setupSaveInformation);
-        profileImage = (ImageView) findViewById(R.id.setupProfileImage);
+        profileImage = (ImageButton) findViewById(R.id.setupImage);
 
         saveInformation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,14 +70,46 @@ public class SetupActivity extends AppCompatActivity {
             }
         });
 
+        profileImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+               OpenGallery();
+            }
+        });
+
     }
+
+    private void OpenGallery() {
+        Intent i = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        final int ACTIVITY_SELECT_IMAGE = 1234;
+        startActivityForResult(i, Gallery_Pick);
+       /* Intent galleryIntent = new Intent();
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("/image/*");
+
+        startActivityForResult(Intent.createChooser(galleryIntent,"Select Picture"), Gallery_Pick);*/
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==Gallery_Pick&&resultCode==RESULT_OK&&data!=null){
+            ImageUri = data.getData();
+            profileImage.setImageURI(ImageUri);
+        }
+    }
+
 
     private void SaveAccountSetupInformation() {
         String username = Username.getText().toString();
         String fullname = Fullname.getText().toString();
         String country = Country.getText().toString();
-
-        if(TextUtils.isEmpty(username)){
+        if(ImageUri==null) {
+            Toast.makeText(this, "Please enter your User Name...", Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(username)){
             Toast.makeText(this,"Please enter your User Name...",Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(fullname)){
             Toast.makeText(this,"Please enter your Full Name...",Toast.LENGTH_SHORT).show();
@@ -73,29 +120,73 @@ public class SetupActivity extends AppCompatActivity {
             loadingBar.setMessage("Please wait....");
             loadingBar.show();
             loadingBar.setCanceledOnTouchOutside(true);
-            HashMap userMap=new HashMap();
-            userMap.put("username",username);
-            userMap.put("fullname",fullname);
-            userMap.put("country",country);
-            userMap.put("status",username);
-            userMap.put("gender","none");
-            UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if(task.isSuccessful()){
-                        SendUserToMainActivity();
-                        Toast.makeText(SetupActivity.this,"Your Account is created successfully...",Toast.LENGTH_SHORT).show();
-                        loadingBar.dismiss();
-                    }else{
-                        String message = task.getException().getMessage();
-                        Toast.makeText(SetupActivity.this,"Error Occured:"+message,Toast.LENGTH_SHORT).show();
-                        loadingBar.dismiss();
-                    }
-                }
-            });
+
+            StoringImageToFirebaseStorage();
+
+
 
         }
     }
+
+    private void StoringImageToFirebaseStorage() {
+        Calendar calFordDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+        saveCurrentDate=currentDate.format(calFordDate.getTime());
+
+        Calendar calFordTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        saveCurrentTime=currentTime.format(calFordDate.getTime());
+
+        post=saveCurrentDate+saveCurrentTime;
+
+        final StorageReference filePath = PostsImagesReference.child("Profile Images").child(ImageUri.getLastPathSegment()+post+".jpg");
+
+        filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
+                   downloadUrl = task.getResult().getMetadata().getReference().getDownloadUrl().toString();
+
+                    Toast.makeText(SetupActivity.this,"Image uploaded successfully..."+downloadUrl,Toast.LENGTH_SHORT).show();
+                    StoringImageToDatabase();
+
+                }else{
+                    String message = task.getException().getMessage();
+                    Toast.makeText(SetupActivity.this,"Error Occured:"+message,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void StoringImageToDatabase() {
+
+        String username = Username.getText().toString();
+        String fullname = Fullname.getText().toString();
+        String country = Country.getText().toString();
+        HashMap userMap=new HashMap();
+        userMap.put("username",username);
+        userMap.put("fullname",fullname);
+        userMap.put("country",country);
+        userMap.put("status",username);
+        userMap.put("gender","none");
+        userMap.put("profileImage",downloadUrl);
+        UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if(task.isSuccessful()){
+                    SendUserToMainActivity();
+                    Toast.makeText(SetupActivity.this,"Your Account is created successfully...",Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
+                }else{
+                    String message = task.getException().getMessage();
+                    Toast.makeText(SetupActivity.this,"Error Occured:"+message,Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
+                }
+            }
+        });
+    }
+
     private void SendUserToMainActivity() {
         Intent mainIntent = new Intent(this,feed.class);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -6,6 +6,7 @@
     <string name="title_favourite">Favourite</string>
     <string name="title_profile">Profile</string>
     <string name="Project_name">Insta City</string>
+    <string name="logout_text"><u>Logout</u></string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="total_like">50</string>

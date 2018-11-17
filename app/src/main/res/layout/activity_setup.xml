@@ -8,13 +8,15 @@
     tools:context=".SetupActivity">
 
 
-    <ImageView
-        android:id="@+id/setupProfileImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+
+    <ImageButton
+        android:id="@+id/setupImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/user" />
+        android:layout_marginTop="60dp"
+        app:srcCompat="@drawable/user" />
 
     <EditText
 
@@ -92,5 +94,7 @@
         android:textColor="@color/pureWhite"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+
 
 </RelativeLayout>

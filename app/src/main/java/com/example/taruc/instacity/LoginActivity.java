@@ -52,13 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-    /*protected void onStart(){
+    protected void onStart(){
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            //SendUserToMainActivity();
+            SendUserToMainActivity();
         }
-    }*/
+    }
 
     private void AllowingUserToLogin() {
         String email = UserEmail.getText().toString();
