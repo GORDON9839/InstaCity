@@ -20,8 +20,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -48,12 +51,12 @@ public class createFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
 
-    private EditText description;
+    private EditText caption;
     private Button createNewPost;
     private ImageButton postImage;
 
     private FirebaseAuth mAuth;
-    private DatabaseReference UsersRef;
+    private DatabaseReference UsersRef,PostRef;
     private ProgressDialog loadingBar;
     private static final int Gallery_Pick=1;
     private Uri ImageUri;
@@ -87,32 +90,10 @@ public class createFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create, container, false);
-        mAuth = FirebaseAuth.getInstance();
-        currentUserID = mAuth.getCurrentUser().getUid();
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
-        loadingBar = new ProgressDialog(getActivity());
-        PostsImagesReference = FirebaseStorage.getInstance().getReference();
-        View view = inflater.inflate(R.layout.fragment_create, container, false);
-
-
-        description = (EditText)view.findViewById(R.id.createDescription);
-
-        createNewPost = (Button) view.findViewById(R.id.create);
-        postImage = (ImageButton) view.findViewById(R.id.createImage);
-
         createNewPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveAccountSetupInformation();
+                inputFieldValidation();
             }
         });
 
@@ -122,17 +103,37 @@ public class createFragment extends Fragment {
                 OpenGallery();
             }
         });
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+        PostRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        loadingBar = new ProgressDialog(getActivity());
+        PostsImagesReference = FirebaseStorage.getInstance().getReference();
+        View view = inflater.inflate(R.layout.fragment_create, container, false);
+
+
+        caption = (EditText)view.findViewById(R.id.createDescription);
+
+        createNewPost = (Button) view.findViewById(R.id.createButton);
+        postImage = (ImageButton) view.findViewById(R.id.createImage);
+
+
+        return inflater.inflate(R.layout.fragment_create, container, false);
     }
     private void OpenGallery() {
         Intent i = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        final int ACTIVITY_SELECT_IMAGE = 1234;
-        startActivityForResult(i, Gallery_Pick);
-       /* Intent galleryIntent = new Intent();
-        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("/image/*");
 
-        startActivityForResult(Intent.createChooser(galleryIntent,"Select Picture"), Gallery_Pick);*/
+        startActivityForResult(i, Gallery_Pick);
+
     }
 
     @Override
@@ -183,23 +184,7 @@ public class createFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    private void SaveAccountSetupInformation() {
-        String Description = description.getText().toString();
 
-       if(TextUtils.isEmpty(Description)){
-            Toast.makeText(getActivity(),"Please enter your Country...",Toast.LENGTH_SHORT).show();
-        }else{
-            loadingBar.setTitle("Creating Post");
-            loadingBar.setMessage("Please wait....");
-            loadingBar.show();
-            loadingBar.setCanceledOnTouchOutside(true);
-
-            StoringImageToFirebaseStorage();
-
-
-
-        }
-    }
     private void StoringImageToFirebaseStorage() {
         Calendar calFordDate = Calendar.getInstance();
         SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -220,7 +205,7 @@ public class createFragment extends Fragment {
                     downloadUrl = task.getResult().getMetadata().getReference().getDownloadUrl().toString();
 
                     Toast.makeText(getActivity(),"Image uploaded successfully..."+downloadUrl,Toast.LENGTH_SHORT).show();
-                    StoringImageToDatabase();
+                    StoringFeedToDatabase();
 
                 }else{
                     String message = task.getException().getMessage();
@@ -230,31 +215,70 @@ public class createFragment extends Fragment {
         });
 
     }
-    private void StoringImageToDatabase() {
+    private void inputFieldValidation() {
+        String cap = caption.getText().toString();
 
-        String username = Username.getText().toString();
-        String fullname = Fullname.getText().toString();
-        String country = Country.getText().toString();
-        HashMap userMap=new HashMap();
-        userMap.put("username",username);
-        userMap.put("fullname",fullname);
-        userMap.put("country",country);
-        userMap.put("status",username);
-        userMap.put("gender","none");
-        userMap.put("profileImage",downloadUrl);
-        UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+        if (TextUtils.isEmpty(cap)) {
+            Toast.makeText(getActivity(), "Please enter caption...", Toast.LENGTH_SHORT).show();
+        } else {
+            loadingBar.setTitle("Creating Post");
+            loadingBar.setMessage("Please wait....");
+            loadingBar.show();
+            loadingBar.setCanceledOnTouchOutside(true);
+
+            StoringImageToFirebaseStorage();
+
+
+        }
+    }
+    private void StoringFeedToDatabase() {
+
+
+        String cap = caption.getText().toString();
+        UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener(){
             @Override
-            public void onComplete(@NonNull Task task) {
-                if(task.isSuccessful()){
-                    SendUserToMainActivity();
-                    Toast.makeText(SetupActivity.this,"Your Account is created successfully...",Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
-                }else{
-                    String message = task.getException().getMessage();
-                    Toast.makeText(SetupActivity.this,"Error Occured:"+message,Toast.LENGTH_SHORT).show();
-                    loadingBar.dismiss();
+            public void onDataChange(DataSnapshot dataSnapshot){
+                if(dataSnapshot.exists()){
+                    String userFullName = dataSnapshot.child("username").getValue().toString();
+                    String userProfileImage = dataSnapshot.child("profileImage").getValue().toString();
+
+                    HashMap postMap=new HashMap();
+                    postMap.put("uid",currentUserID);
+                    postMap.put("date",saveCurrentDate);
+                    postMap.put("time",saveCurrentTime);
+                    postMap.put("caption",caption);
+                    postMap.put("postImage",downloadUrl);
+                    postMap.put("fullname",userFullName);
+                    postMap.put("profileImage",userProfileImage);
+
+                   PostRef.child(post).updateChildren(postMap).addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if(task.isSuccessful()){
+                                SendUserToMainActivity();
+                                Toast.makeText(getActivity(),"Your Posts is created successfully...",Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
+                            }else{
+                                String message = task.getException().getMessage();
+                                Toast.makeText(getActivity(),"Error Occured:"+message,Toast.LENGTH_SHORT).show();
+                                loadingBar.dismiss();
+                            }
+                        }
+                    });
                 }
             }
+            public void onCancelled(DatabaseError databseError){
+
+            }
         });
+
+
+    }
+
+    private void SendUserToMainActivity() {
+        Intent mainIntent = new Intent(getActivity(),feed.class);
+        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(mainIntent);
+
     }
 }

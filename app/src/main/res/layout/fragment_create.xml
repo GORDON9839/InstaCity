@@ -31,7 +31,7 @@
         android:background="@drawable/inputs"
         android:drawableLeft="@drawable/username"
         android:ems="10"
-        android:hint="Description"
+        android:hint="@string/caption_hint"
 
         android:inputType="textMultiLine"
         android:padding="10dp"
@@ -39,7 +39,7 @@
 
     <Button
 
-        android:id="@+id/create"
+        android:id="@+id/createButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
