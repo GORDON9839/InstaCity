@@ -90,19 +90,7 @@ public class createFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createNewPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                inputFieldValidation();
-            }
-        });
 
-        postImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                OpenGallery();
-            }
-        });
 
     }
 
@@ -125,8 +113,22 @@ public class createFragment extends Fragment {
         createNewPost = (Button) view.findViewById(R.id.createButton);
         postImage = (ImageButton) view.findViewById(R.id.createImage);
 
+        createNewPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputFieldValidation();
+            }
+        });
 
-        return inflater.inflate(R.layout.fragment_create, container, false);
+        postImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                OpenGallery();
+            }
+        });
+
+
+        return view;
     }
     private void OpenGallery() {
         Intent i = new Intent(Intent.ACTION_PICK,
@@ -192,7 +194,7 @@ public class createFragment extends Fragment {
 
         Calendar calFordTime = Calendar.getInstance();
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-        saveCurrentTime=currentTime.format(calFordDate.getTime());
+        saveCurrentTime=currentTime.format(calFordTime.getTime());
 
         post=saveCurrentDate+saveCurrentTime;
 
@@ -204,7 +206,7 @@ public class createFragment extends Fragment {
                 if(task.isSuccessful()){
                     downloadUrl = task.getResult().getMetadata().getReference().getDownloadUrl().toString();
 
-                    Toast.makeText(getActivity(),"Image uploaded successfully..."+downloadUrl,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Image uploaded successfully...",Toast.LENGTH_SHORT).show();
                     StoringFeedToDatabase();
 
                 }else{
@@ -234,21 +236,23 @@ public class createFragment extends Fragment {
     private void StoringFeedToDatabase() {
 
 
-        String cap = caption.getText().toString();
-        UsersRef.child(currentUserID).addValueEventListener(new ValueEventListener(){
+
+        UsersRef.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
                 if(dataSnapshot.exists()){
-                    String userFullName = dataSnapshot.child("username").getValue().toString();
+                    String userName = dataSnapshot.child("username").getValue().toString();
                     String userProfileImage = dataSnapshot.child("profileImage").getValue().toString();
+                    String cap = caption.getText().toString();
+
 
                     HashMap postMap=new HashMap();
                     postMap.put("uid",currentUserID);
                     postMap.put("date",saveCurrentDate);
                     postMap.put("time",saveCurrentTime);
-                    postMap.put("caption",caption);
+                    postMap.put("caption",cap);
                     postMap.put("postImage",downloadUrl);
-                    postMap.put("fullname",userFullName);
+                    postMap.put("userName",userName);
                     postMap.put("profileImage",userProfileImage);
 
                    PostRef.child(post).updateChildren(postMap).addOnCompleteListener(new OnCompleteListener() {
@@ -265,6 +269,10 @@ public class createFragment extends Fragment {
                             }
                         }
                     });
+                }else{
+                    loadingBar.dismiss();
+
+                    Toast.makeText(getActivity(),"Error",Toast.LENGTH_SHORT).show();
                 }
             }
             public void onCancelled(DatabaseError databseError){
