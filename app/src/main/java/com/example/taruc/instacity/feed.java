@@ -190,4 +190,5 @@ public class feed extends AppCompatActivity{
         finish();
 
     }
+
 }

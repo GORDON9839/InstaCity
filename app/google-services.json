@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "406454853196",
+    "firebase_url": "https://instacity-6af68.firebaseio.com",
+    "project_id": "instacity-6af68",
+    "storage_bucket": "instacity-6af68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406454853196:android:3f2bb71566f85727",
+        "android_client_info": {
+          "package_name": "com.example.taruc.instacity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406454853196-lq3u7biij6i991tom3kfem003la087rj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.taruc.instacity",
+            "certificate_hash": "ab5dfbc921eee9cf1de76a2ecfe0ea2a8cc54910"
+          }
+        },
+        {
+          "client_id": "406454853196-qef22loq66rt21vp6j3ehshhba9pqk1g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCfzvDNg3RjPVhBlsLgcbc_47-DIM6Nb8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406454853196-qef22loq66rt21vp6j3ehshhba9pqk1g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
