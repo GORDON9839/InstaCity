@@ -9,10 +9,12 @@
 
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/allFeedList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp"
+        tools:listitem="@layout/all_feed_layout"/>
 </RelativeLayout>
