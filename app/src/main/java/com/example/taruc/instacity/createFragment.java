@@ -2,21 +2,35 @@ package com.example.taruc.instacity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -85,7 +99,7 @@ public class createFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
-        loadingBar = new ProgressDialog(createFragment.this);
+        loadingBar = new ProgressDialog(getActivity());
         PostsImagesReference = FirebaseStorage.getInstance().getReference();
         View view = inflater.inflate(R.layout.fragment_create, container, false);
 
@@ -108,6 +122,27 @@ public class createFragment extends Fragment {
                 OpenGallery();
             }
         });
+    }
+    private void OpenGallery() {
+        Intent i = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        final int ACTIVITY_SELECT_IMAGE = 1234;
+        startActivityForResult(i, Gallery_Pick);
+       /* Intent galleryIntent = new Intent();
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("/image/*");
+
+        startActivityForResult(Intent.createChooser(galleryIntent,"Select Picture"), Gallery_Pick);*/
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
+        if(requestCode==Gallery_Pick&&resultCode==RESULT_OK&&data!=null){
+            ImageUri = data.getData();
+            postImage.setImageURI(ImageUri);
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -147,5 +182,79 @@ public class createFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    private void SaveAccountSetupInformation() {
+        String Description = description.getText().toString();
+
+       if(TextUtils.isEmpty(Description)){
+            Toast.makeText(getActivity(),"Please enter your Country...",Toast.LENGTH_SHORT).show();
+        }else{
+            loadingBar.setTitle("Creating Post");
+            loadingBar.setMessage("Please wait....");
+            loadingBar.show();
+            loadingBar.setCanceledOnTouchOutside(true);
+
+            StoringImageToFirebaseStorage();
+
+
+
+        }
+    }
+    private void StoringImageToFirebaseStorage() {
+        Calendar calFordDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMMM-yyyy");
+        saveCurrentDate=currentDate.format(calFordDate.getTime());
+
+        Calendar calFordTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
+        saveCurrentTime=currentTime.format(calFordDate.getTime());
+
+        post=saveCurrentDate+saveCurrentTime;
+
+        final StorageReference filePath = PostsImagesReference.child("Post Images").child(ImageUri.getLastPathSegment()+post+".jpg");
+
+        filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
+                    downloadUrl = task.getResult().getMetadata().getReference().getDownloadUrl().toString();
+
+                    Toast.makeText(getActivity(),"Image uploaded successfully..."+downloadUrl,Toast.LENGTH_SHORT).show();
+                    StoringImageToDatabase();
+
+                }else{
+                    String message = task.getException().getMessage();
+                    Toast.makeText(getActivity(),"Error Occured:"+message,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+    private void StoringImageToDatabase() {
+
+        String username = Username.getText().toString();
+        String fullname = Fullname.getText().toString();
+        String country = Country.getText().toString();
+        HashMap userMap=new HashMap();
+        userMap.put("username",username);
+        userMap.put("fullname",fullname);
+        userMap.put("country",country);
+        userMap.put("status",username);
+        userMap.put("gender","none");
+        userMap.put("profileImage",downloadUrl);
+        UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if(task.isSuccessful()){
+                    SendUserToMainActivity();
+                    Toast.makeText(SetupActivity.this,"Your Account is created successfully...",Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
+                }else{
+                    String message = task.getException().getMessage();
+                    Toast.makeText(SetupActivity.this,"Error Occured:"+message,Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
+                }
+            }
+        });
     }
 }
