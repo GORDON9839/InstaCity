@@ -10,4 +10,13 @@
     <string name="caption_hint">Caption</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="total_love">50</string>
+    <string name ="total_bookmark">20</string>
+    <string name ="username">Johnson</string>
+    <string name ="bookmark">show bookmark</string>
+    <string name ="love_view">show total love</string>
+    <string name ="user_prof">show user profile</string>
+    <string name ="user_post">user post</string>
+    <string name ="user_post2">user post2</string>
+    <string name ="user_post3">user post3</string>
 </resources>
