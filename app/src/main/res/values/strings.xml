@@ -15,4 +15,7 @@
     <string name ="bookmark">show bookmark</string>
     <string name ="like_view">show like</string>
     <string name ="user_icon">show user profile</string>
+    <string name ="user_post">user post</string>
+    <string name ="user_post2">user post2</string>
+    <string name ="user_post3">user post3</string>
 </resources>
