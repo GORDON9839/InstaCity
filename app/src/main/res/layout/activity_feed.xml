@@ -7,38 +7,52 @@
     android:layout_height="match_parent"
 
     tools:context=".feed">
+
     <android.support.v7.widget.CardView
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
 
-       >
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp">
+
         <ImageView
-            android:adjustViewBounds="true"
             android:id="@+id/header"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="15dp"
-            android:layout_gravity="bottom"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
             android:background="@color/pureWhite"
             android:src="@drawable/insta_city_logo" />
 
         <TextView
-            android:onClick="logout_listener"
             android:id="@+id/textView2"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:gravity="right"
-            android:layout_marginLeft="250dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="250dp"
+            android:layout_marginBottom="10dp"
             android:fontFeatureSettings="underline"
+            android:gravity="right"
+            android:onClick="logout_listener"
             android:text="@string/logout_text" />
+
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="320dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="onClickSetting"
+            app:srcCompat="@drawable/setting" />
+
+
     </android.support.v7.widget.CardView>
 
 
@@ -69,7 +83,6 @@
         android:background="@color/pureWhite"
 
         app:menu="@menu/navigation" />
-
 
 
 </RelativeLayout>

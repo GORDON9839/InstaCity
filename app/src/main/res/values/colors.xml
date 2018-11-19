@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#023bd8</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#cf1bd8</color>
     <color name="pureWhite">#ffffff</color>
     <color name="brightgreen">#00cc00</color>
     <color name="lightGrey">#e8e8e8</color>
-    <color name="pureBlue">#023bd8</color>
+    <color name="pureBlue">#ad02d8</color>
+    <color name="red">#FF0000</color>
 </resources>

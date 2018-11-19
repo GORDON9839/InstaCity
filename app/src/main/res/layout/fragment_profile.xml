@@ -5,67 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profileFragment">
-    <android.support.v7.widget.CardView
-        android:id="@+id/card"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:layout_alignParentStart="true">
-        <ImageView
-            android:adjustViewBounds="true"
-            android:id="@+id/header"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="15dp"
-            android:layout_gravity="bottom"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:background="@color/pureWhite"
-            android:src="@drawable/insta_city_logo"
-            android:contentDescription="@string/app_name"/>
-
-        <TextView
-            android:onClick="logout_listener"
-            android:id="@+id/textView2"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="300dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFeatureSettings="underline"
-            android:text="@string/logout_text" />
-    </android.support.v7.widget.CardView>
-
-
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@id/navigation"
-        android:layout_below="@id/card"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:gravity="center_vertical"
-        android:background="@color/lightGrey"
-        />
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:background="@color/pureWhite"
-
-        app:menu="@menu/navigation" />
+    tools:context=".feed">
 
     <ImageView
         android:id="@+id/user_prof"
@@ -131,7 +71,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bookmark"
+        tools:srcCompat="@drawable/bookmark" />
 
     <TextView
         android:id="@+id/total_bookmark"
@@ -150,7 +92,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/name"
         android:layout_width="102dp"
         android:layout_height="22dp"
         android:layout_alignParentStart="true"
@@ -159,7 +101,7 @@
         android:layout_marginStart="39dp"
         android:layout_marginTop="227dp"
         android:layout_marginEnd="243dp"
-        android:text="@string/username"
+        android:text="@string/name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
@@ -221,6 +163,17 @@
         android:contentDescription="@string/user_post3"
         tools:src="@tools:sample/backgrounds/scenic[3]" />
 
+    <Button
+        android:id="@+id/edit_profile"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text ="@string/edit_profile"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="174dp"
+        android:layout_marginEnd="63dp" />
 
 
 </RelativeLayout>
