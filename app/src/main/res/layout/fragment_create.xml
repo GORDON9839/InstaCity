@@ -25,9 +25,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="286dp"
+        android:layout_marginEnd="22dp"
         android:background="@drawable/inputs"
         android:drawableLeft="@drawable/username"
         android:ems="10"
@@ -44,19 +44,22 @@
         android:layout_height="wrap_content"
 
 
+        android:layout_below="@+id/createDescription"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="60dp"
 
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="80dp"
+
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="74dp"
+
+
         android:background="@drawable/button"
         android:padding="15dp"
-        android:text="Create New Post"
+
+        android:text="Create"
         android:textColor="@color/pureWhite"
         android:textSize="18sp"
-
         android:textStyle="bold" />
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -140,8 +142,31 @@ public class SetupActivity extends AppCompatActivity {
         post=saveCurrentDate+saveCurrentTime;
 
         final StorageReference filePath = PostsImagesReference.child("Profile Images").child(ImageUri.getLastPathSegment()+post+".jpg");
+        filePath.putFile(ImageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()){
+                    throw task.getException();
+                }
 
-        filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                return filePath.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()){
+                    Toast.makeText(SetupActivity.this,"Image uploaded successfully...",Toast.LENGTH_SHORT).show();
+                    Uri downUri = task.getResult();
+                    downloadUrl = downUri.toString();
+                    Log.d("url", "onComplete: Url: "+ downUri.toString());
+                    StoringImageToDatabase();
+                }else{
+                    String message = task.getException().getMessage();
+                    Toast.makeText(SetupActivity.this,"Error Occured:"+message,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+       /* filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 if(task.isSuccessful()){
@@ -155,7 +180,7 @@ public class SetupActivity extends AppCompatActivity {
                     Toast.makeText(SetupActivity.this,"Error Occured:"+message,Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        });*/
 
     }
 
@@ -165,8 +190,8 @@ public class SetupActivity extends AppCompatActivity {
         String fullname = Fullname.getText().toString();
         String country = Country.getText().toString();
         HashMap userMap=new HashMap();
-        userMap.put("username",username);
-        userMap.put("fullname",fullname);
+        userMap.put("userName",username);
+        userMap.put("fullName",fullname);
         userMap.put("country",country);
         userMap.put("status",username);
         userMap.put("gender","none");

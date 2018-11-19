@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -199,22 +201,49 @@ public class createFragment extends Fragment {
         post=saveCurrentDate+saveCurrentTime;
 
         final StorageReference filePath = PostsImagesReference.child("Post Images").child(ImageUri.getLastPathSegment()+post+".jpg");
-
-        filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+        filePath.putFile(ImageUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
             @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if(task.isSuccessful()){
-                    downloadUrl = task.getResult().getMetadata().getReference().getDownloadUrl().toString();
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()){
+                    throw task.getException();
+                }
 
+                return filePath.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()){
                     Toast.makeText(getActivity(),"Image uploaded successfully...",Toast.LENGTH_SHORT).show();
+                    Uri downUri = task.getResult();
+                    downloadUrl=downUri.toString();
+                    Log.d("url", "onComplete: Url: "+ downUri.toString());
                     StoringFeedToDatabase();
-
                 }else{
                     String message = task.getException().getMessage();
                     Toast.makeText(getActivity(),"Error Occured:"+message,Toast.LENGTH_SHORT).show();
                 }
             }
         });
+       /* filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                if(task.isSuccessful()){
+                    Toast.makeText(getActivity(),"Image uploaded successfully...",Toast.LENGTH_SHORT).show();
+                    UploadTask.TaskSnapshot url1 = task.getResult();
+                    String url= task.getResult().toString();
+
+                    Log.d("downloadUrl",task.get);
+                    StoringFeedToDatabase();
+
+
+
+                }else{
+                    String message = task.getException().getMessage();
+                    Toast.makeText(getActivity(),"Error Occured:"+message,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
 
     }
     private void inputFieldValidation() {
@@ -241,7 +270,7 @@ public class createFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
                 if(dataSnapshot.exists()){
-                    String userName = dataSnapshot.child("username").getValue().toString();
+                    String userName = dataSnapshot.child("userName").getValue().toString();
                     String userProfileImage = dataSnapshot.child("profileImage").getValue().toString();
                     String cap = caption.getText().toString();
 
@@ -275,7 +304,7 @@ public class createFragment extends Fragment {
                     Toast.makeText(getActivity(),"Error",Toast.LENGTH_SHORT).show();
                 }
             }
-            public void onCancelled(DatabaseError databseError){
+            public void onCancelled(DatabaseError databaseError){
 
             }
         });
