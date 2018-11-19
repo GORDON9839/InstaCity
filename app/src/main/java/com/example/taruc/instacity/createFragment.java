@@ -270,7 +270,7 @@ public class createFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
                 if(dataSnapshot.exists()){
-                    String userName = dataSnapshot.child("username").getValue().toString();
+                    String userName = dataSnapshot.child("userName").getValue().toString();
                     String userProfileImage = dataSnapshot.child("profileImage").getValue().toString();
                     String cap = caption.getText().toString();
 
@@ -304,7 +304,7 @@ public class createFragment extends Fragment {
                     Toast.makeText(getActivity(),"Error",Toast.LENGTH_SHORT).show();
                 }
             }
-            public void onCancelled(DatabaseError databseError){
+            public void onCancelled(DatabaseError databaseError){
 
             }
         });

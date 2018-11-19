@@ -180,7 +180,7 @@ public class feedFragment extends Fragment{
         }
         public void setTime(String time){
             TextView t = (TextView)mView.findViewById(R.id.feedTime);
-            t.setText("  "+time);
+            t.setText(time);
         }
         public void setDate(String date){
             TextView d = (TextView)mView.findViewById(R.id.feedDate);
