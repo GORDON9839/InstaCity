@@ -1,100 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background"
-    android:layout_height="match_parent"
+
+    android:layout_height="wrap_content"
     tools:context=".SetupActivity">
 
 
-
-    <ImageButton
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="250dp"
+    android:background="@drawable/city">
+    <ImageView
         android:id="@+id/setupImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginTop="60dp"
-        app:srcCompat="@drawable/user" />
-
-    <EditText
-
-        android:id="@+id/setupUsername"
-        android:layout_width="251dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="220dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/username"
-        android:ems="10"
-        android:hint="Username"
-
-        android:inputType="textMultiLine"
-        android:padding="10dp"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/setupFullname"
-        android:layout_width="240dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setupUsername"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/user36px"
-        android:ems="10"
-        android:hint="Full Name"
-        android:inputType="textMultiLine"
-        android:padding="10dp"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/setupCountry"
-        android:layout_width="242dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/setupFullname"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/country"
-        android:ems="10"
-        android:hint="Country"
-        android:inputType="textMultiLine"
-        android:padding="10dp"
-        android:textSize="15sp" />
-
-    <Button
-
-        android:id="@+id/setupSaveInformation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="60dp"
-
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/button"
-        android:padding="15dp"
-        android:text="Save"
-        android:textColor="@color/pureWhite"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-
-
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/user"
+        android:background="@drawable/images"/>
 </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        >
+
+        <EditText
+
+            android:id="@+id/setupUsername"
+            android:layout_width="251dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="25dp"
+            android:layout_below="@id/textView"
+
+            android:ems="10"
+            android:hint="@string/user_name"
+
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/setupFullname"
+            android:layout_width="240dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/setupUsername"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="25dp"
+
+            android:ems="10"
+            android:hint="@string/full_name"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/setupIc"
+            android:layout_width="242dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/setupFullname"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="25dp"
+
+            android:ems="10"
+            android:hint="IC Number"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/setupContact"
+            android:layout_width="242dp"
+            android:layout_height="60dp"
+            android:layout_below="@id/setupIc"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="25dp"
+
+            android:ems="10"
+            android:hint="Contact Number"
+            android:inputType="textMultiLine"
+            android:padding="10dp"
+            android:textSize="15sp" />
+
+
+
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="11dp"
+            android:text="Personal Information"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setupContact"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:text="Gender"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/setupGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textGender"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp">
+
+            <RadioButton
+                android:id="@+id/setupMale"
+                android:layout_width="74dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/setupFemale"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+
+                android:text="Female" />
+
+        </RadioGroup>
+        <TextView
+            android:id="@+id/textResidence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setupGender"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:text="Are you the residence of Cyberjaya?"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/setupResidence"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textResidence"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="10dp">
+
+            <RadioButton
+                android:id="@+id/setupYes"
+                android:layout_width="74dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:text="Yes" />
+
+            <RadioButton
+                android:id="@+id/setupNo"
+                android:layout_width="95dp"
+                android:layout_height="wrap_content"
+
+                android:text="No" />
+
+        </RadioGroup>
+        <Button
+
+            android:id="@+id/setupSaveInformation"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setupResidence"
+            android:background="@drawable/button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:padding="15dp"
+            android:text="Save"
+            android:textColor="@color/pureWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout></RelativeLayout></ScrollView>

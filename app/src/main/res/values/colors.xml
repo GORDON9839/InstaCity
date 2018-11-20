@@ -7,4 +7,7 @@
     <color name="brightgreen">#00cc00</color>
     <color name="lightGrey">#e8e8e8</color>
     <color name="pureBlue">#023bd8</color>
+    <color name="reallyLightGrey">#f2f4ff</color>
+    <color name="notSoBlack">#505051</color>
+
 </resources>

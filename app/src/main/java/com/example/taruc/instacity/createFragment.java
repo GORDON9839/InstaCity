@@ -110,7 +110,7 @@ public class createFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create, container, false);
 
 
-        caption = (EditText)view.findViewById(R.id.createDescription);
+        caption = (EditText)view.findViewById(R.id.captionEvent);
 
         createNewPost = (Button) view.findViewById(R.id.createButton);
         postImage = (ImageButton) view.findViewById(R.id.createImage);
