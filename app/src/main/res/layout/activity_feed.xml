@@ -11,7 +11,7 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
+
 
        >
         <ImageView
@@ -28,17 +28,28 @@
             android:background="@color/pureWhite"
             android:src="@drawable/insta_city_logo" />
 
-        <TextView
-            android:onClick="logout_listener"
-            android:id="@+id/textView2"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
-            android:gravity="right"
-            android:layout_marginLeft="250dp"
+        <ImageView
+            android:id="@+id/logout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFeatureSettings="underline"
-            android:text="@string/logout_text" />
+            android:layout_height="40dp"
+            android:layout_marginLeft="350dp"
+            android:layout_marginTop="5dp"
+            android:onClick="logout_listener"
+
+            android:background="@color/pureWhite"
+            android:src="@drawable/exit" />
+
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="5dp"
+
+            android:background="@color/pureWhite"
+            android:src="@drawable/setting" />
+
+
     </android.support.v7.widget.CardView>
 
 

@@ -3,6 +3,7 @@ package com.example.taruc.instacity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -30,5 +31,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     }
     public void addFragment(Fragment fragment) {
         mFragmentList.add(fragment);
+        Log.d("testPage","page route1");
     }
 }

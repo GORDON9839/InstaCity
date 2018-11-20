@@ -27,7 +27,7 @@ public class feed extends AppCompatActivity{
 
     feedFragment feedFrag;
     activityFragment activityFrag;
-    createFragment createFrag;
+    create_interfaceFragment createIntFrag;
     favouriteFragment favouriteFrag;
     profileFragment profileFrag;
     BottomNavigationView bnv;
@@ -169,12 +169,12 @@ public class feed extends AppCompatActivity{
         PagerAdapter viewPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         feedFrag = new feedFragment();
         activityFrag = new activityFragment();
-        createFrag = new createFragment();
+        createIntFrag = new create_interfaceFragment();
         favouriteFrag = new favouriteFragment();
         profileFrag = new profileFragment();
         viewPagerAdapter.addFragment(feedFrag);
         viewPagerAdapter.addFragment(activityFrag);
-        viewPagerAdapter.addFragment(createFrag);
+        viewPagerAdapter.addFragment(createIntFrag);
         viewPagerAdapter.addFragment(favouriteFrag);
         viewPagerAdapter.addFragment(profileFrag);
         viewPager.setAdapter(viewPagerAdapter);

@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
@@ -33,9 +35,11 @@ import java.util.HashMap;
 
 public class SetupActivity extends AppCompatActivity {
 
-    private EditText Username, Fullname,Country;
+    private EditText Username, Fullname,icNumber,contactNumber;
     private Button saveInformation;
-    private ImageButton profileImage;
+    private ImageView profileImage;
+    private RadioGroup genderRadio,residenceRadio;
+    private RadioButton genderRB,residenceRB;
 
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
@@ -61,9 +65,13 @@ public class SetupActivity extends AppCompatActivity {
 
         Username = (EditText) findViewById(R.id.setupUsername);
         Fullname = (EditText) findViewById(R.id.setupFullname);
-        Country = (EditText) findViewById(R.id.setupCountry);
+        icNumber = (EditText) findViewById(R.id.setupIc);
+        contactNumber =(EditText) findViewById(R.id.setupContact);
+        genderRadio =(RadioGroup) findViewById(R.id.setupGender);
+        residenceRadio =(RadioGroup) findViewById(R.id.setupResidence);
+
         saveInformation = (Button) findViewById(R.id.setupSaveInformation);
-        profileImage = (ImageButton) findViewById(R.id.setupImage);
+        profileImage = (ImageView) findViewById(R.id.setupImage);
 
         saveInformation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,16 +115,20 @@ public class SetupActivity extends AppCompatActivity {
     private void SaveAccountSetupInformation() {
         String username = Username.getText().toString();
         String fullname = Fullname.getText().toString();
-        String country = Country.getText().toString();
+        String ic = icNumber.getText().toString();
+        String contact = contactNumber.getText().toString();
         if(ImageUri==null) {
-            Toast.makeText(this, "Please enter your User Name...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select your Profile Image...", Toast.LENGTH_SHORT).show();
         }
         else if(TextUtils.isEmpty(username)){
             Toast.makeText(this,"Please enter your User Name...",Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(fullname)){
             Toast.makeText(this,"Please enter your Full Name...",Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(country)){
-            Toast.makeText(this,"Please enter your Country...",Toast.LENGTH_SHORT).show();
+        }else if(TextUtils.isEmpty(ic)){
+            Toast.makeText(this,"Please enter your IC Number...",Toast.LENGTH_SHORT).show();
+        }
+        else if(TextUtils.isEmpty(contact)) {
+            Toast.makeText(this, "Please enter your Contact Number...", Toast.LENGTH_SHORT).show();
         }else{
             loadingBar.setTitle("Verifying Your Information");
             loadingBar.setMessage("Please wait....");
@@ -188,13 +200,19 @@ public class SetupActivity extends AppCompatActivity {
 
         String username = Username.getText().toString();
         String fullname = Fullname.getText().toString();
-        String country = Country.getText().toString();
+        String ic = icNumber.getText().toString();
+        String contact = contactNumber.getText().toString();
+        int selectedGender = genderRadio.getCheckedRadioButtonId();
+        genderRB = (RadioButton) findViewById(selectedGender);
+        int selectedResidence = residenceRadio.getCheckedRadioButtonId();
+        residenceRB = (RadioButton) findViewById(selectedResidence);
         HashMap userMap=new HashMap();
         userMap.put("userName",username);
         userMap.put("fullName",fullname);
-        userMap.put("country",country);
-        userMap.put("status",username);
-        userMap.put("gender","none");
+        userMap.put("icNumber",ic);
+        userMap.put("contactNumber",contact);
+        userMap.put("gender",genderRB.getText());
+        userMap.put("residence",residenceRB.getText());
         userMap.put("profileImage",downloadUrl);
         UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
             @Override

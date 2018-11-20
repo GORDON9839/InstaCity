@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/frag_create"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,31 +15,32 @@
     tools:context=".createFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ImageButton
-        android:id="@+id/createImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+
+    <TextView
+        android:id="@+id/titleNewFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
+        android:textSize="55px"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        app:srcCompat="@drawable/user" />
+        android:text="@string/new_feed"
+        android:textColor="@color/notSoBlack"
+        android:textStyle="bold"
+        />
 
     <EditText
 
-        android:id="@+id/createDescription"
-        android:layout_width="251dp"
+        android:id="@+id/captionEvent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="286dp"
-        android:layout_marginEnd="22dp"
-        android:background="@drawable/inputs"
-        android:drawableLeft="@drawable/username"
+        android:layout_below="@+id/locationFeedSpinner"
+
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="110dp"
         android:ems="10"
         android:hint="@string/caption_hint"
-
         android:inputType="textMultiLine"
         android:padding="10dp"
         android:textSize="15sp" />
@@ -42,24 +50,44 @@
         android:id="@+id/createButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-
-        android:layout_below="@+id/createDescription"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-
-
+        android:layout_below="@+id/textFeedPhoto"
+android:layout_centerHorizontal="true"
         android:layout_marginStart="81dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="74dp"
-
-
         android:background="@drawable/button"
         android:padding="15dp"
-
         android:text="Create"
         android:textColor="@color/pureWhite"
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <Spinner
+        android:autofillHints="@string/choose_location"
+        android:id="@+id/locationFeedSpinner"
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/titleNewFeed"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:id="@+id/textFeedPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/createImage"
+        android:layout_centerHorizontal="true"
+        android:text="@string/add_photo" />
+
+    <ImageButton
+
+        android:id="@+id/createImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_below="@+id/captionEvent"
+    android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        app:srcCompat="@drawable/icons8_add_new_104px" />
+
 </RelativeLayout>
+</ScrollView>
