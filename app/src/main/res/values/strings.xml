@@ -19,6 +19,7 @@
     <string name="please_choose_photo_tips">Please choose a photo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="post">Post</string>
     <string name="please_enter_event">Please enter event name</string>
     <string name="select_date">Select Date</string>
@@ -30,4 +31,13 @@
     <string name="choose_location">Choose Location</string>
     <string name="full_name">Full Name</string>
     <string name="user_name">User Name</string>
+    <string name="total_love">50</string>
+    <string name ="total_bookmark">20</string>
+    <string name ="username">Johnson</string>
+    <string name ="bookmark">show bookmark</string>
+    <string name ="love_view">show total love</string>
+    <string name ="user_prof">show user profile</string>
+    <string name ="user_post">user post</string>
+    <string name ="user_post2">user post2</string>
+    <string name ="user_post3">user post3</string>
 </resources>
