@@ -47,7 +47,8 @@
             android:layout_marginTop="5dp"
 
             android:background="@color/pureWhite"
-            android:src="@drawable/setting" />
+            android:src="@drawable/setting"
+            android:onClick="settingListener"/>
 
 
     </android.support.v7.widget.CardView>

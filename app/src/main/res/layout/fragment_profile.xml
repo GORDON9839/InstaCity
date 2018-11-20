@@ -1,14 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".profileFragment">
+    tools:context=".feed">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/user_prof"
+        android:layout_width="116dp"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="245dp"
+        android:contentDescription="@string/user_prof"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/user_profile" />
+
+    <ImageView
+        android:id="@+id/love_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="179dp"
+        android:layout_marginTop="97dp"
+        android:layout_marginEnd="160dp"
+        android:contentDescription="@string/love_view"
+        android:src="@drawable/love_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Profile" />
+        android:id="@+id/total_love"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="194dp"
+        android:layout_marginTop="151dp"
+        android:layout_marginEnd="174dp"
+        android:text="@string/total_love"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/bookmark"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="263dp"
+        android:layout_marginTop="98dp"
+        android:layout_marginEnd="76dp"
+        android:contentDescription="@string/bookmark"
+        android:src="@drawable/bookmark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bookmark"
+        tools:srcCompat="@drawable/bookmark" />
+
+    <TextView
+        android:id="@+id/total_bookmark"
+        android:layout_width="13dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="272dp"
+        android:layout_marginTop="152dp"
+        android:layout_marginEnd="96dp"
+        android:text="@string/total_bookmark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.706"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="102dp"
+        android:layout_height="22dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="227dp"
+        android:layout_marginEnd="243dp"
+        android:text="@string/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="264dp"
+        android:background="?android:attr/listDivider"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/user_post"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_above="@+id/navigation"
+        android:layout_below="@+id/divider"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="274dp"
+        android:layout_marginBottom="102dp"
+        android:contentDescription="@string/user_post"
+
+        android:src="@drawable/sample_1"
+        />
+
+    <ImageView
+        android:id="@+id/user_post2"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_below="@+id/divider"
+        android:layout_alignBottom="@+id/pager"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="164dp"
+        android:layout_marginBottom="102dp"
+        android:contentDescription="@string/user_post2"
+       android:src="@drawable/sample_2" />
+
+    <ImageView
+        android:id="@+id/user_post3"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:layout_below="@+id/divider"
+        android:layout_alignBottom="@+id/pager"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="102dp"
+        android:contentDescription="@string/user_post3"
+        android:src="@drawable/sample_3" />
+
+    <Button
+        android:id="@+id/edit_profile"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text ="@string/edit_profile"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="174dp"
+        android:layout_marginEnd="63dp" />
+
+
+</RelativeLayout>

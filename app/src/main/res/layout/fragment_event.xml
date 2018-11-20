@@ -12,14 +12,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".eventFragment">
+    tools:context=".create_eventFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/createImage"
+        android:layout_below="@+id/createEventImage"
         android:layout_centerHorizontal="true"
 android:layout_marginTop="20dp"
         android:text="@string/please_choose_photo_tips" />
@@ -38,10 +38,10 @@ android:layout_marginTop="30dp"
         />
 
     <ImageButton
-        android:id="@+id/createImage"
+        android:id="@+id/createEventImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_below="@+id/captionFeed"
+        android:layout_below="@+id/captionEvent"
         android:layout_alignParentStart="true"
         android:layout_marginStart="117dp"
         android:layout_marginTop="35dp"
@@ -59,7 +59,8 @@ android:layout_marginTop="30dp"
         android:hint="@string/please_enter_event"
         android:inputType="textMultiLine"
         android:padding="10dp"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        />
     <EditText
         android:id="@+id/eventDate"
         android:layout_below="@+id/eventName"
@@ -99,13 +100,14 @@ android:layout_marginTop="30dp"
         android:inputType="textMultiLine"
         android:padding="10dp"
         android:textSize="15sp" />
+
     <EditText
-        android:id="@+id/captionFeed"
+        android:id="@+id/captionEvent"
         android:layout_width="251dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/eventEndTime"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="38dp"
         android:layout_marginEnd="23dp"
         android:ems="10"
         android:hint="@string/caption_hint"
@@ -136,7 +138,8 @@ android:layout_marginTop="30dp"
         android:layout_width="250dp"
         android:layout_height="30dp"
         android:layout_below="@+id/titleNewEvent"
-
+        android:prompt="@string/location"
+        android:entries="@array/location"
 
         android:layout_marginStart="45dp"
         android:layout_marginTop="43dp"

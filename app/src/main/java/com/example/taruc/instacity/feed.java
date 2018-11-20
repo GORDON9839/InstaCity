@@ -191,4 +191,7 @@ public class feed extends AppCompatActivity{
 
     }
 
+    public void settingListener(View view) {
+
+    }
 }

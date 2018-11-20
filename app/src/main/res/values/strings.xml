@@ -30,4 +30,41 @@
     <string name="choose_location">Choose Location</string>
     <string name="full_name">Full Name</string>
     <string name="user_name">User Name</string>
+    <string name="event_name">Event name</string>
+    <string name="event_caption">Event caption</string>
+    <string name="location">Location</string>
+    <!--sushi tag-->
+    <string name="total_love">50</string>
+    <string name ="total_bookmark">20</string>
+    <string name ="name">Johnson</string>
+    <string name ="bookmark">show bookmark</string>
+    <string name ="love_view">show total love</string>
+    <string name ="user_prof">show user profile</string>
+    <string name ="user_post">user post</string>
+    <string name ="user_post2">user post2</string>
+    <string name ="user_post3">user post3</string>
+    <!-- Edit Profile part -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="ic">IC</string>
+    <string name="ic_text">921203-51-4234</string>
+    <!-- setting -->
+    <string name="setting">Setting</string>
+    <string name="change_password">Change Password</string>
+    <string name="privacy">Privacy</string>
+    <string name="help">Help</string>
+    <string name="help_text">Got Problem? Please contact us through :</string>
+    <string name="phone">Phone</string>
+    <string name="phone_text">011-2345678</string>
+    <string name="email_text">instacity@gmail.com</string>
+    <!--change password part -->
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="retype_password">Retype New Password</string>
+    <string name="old_password_input">Enter your old password</string>
+    <string name="new_password_input">Enter your new password</string>
+    <string name="retype_password_input">Enter again new password</string>
+    <string name="confirm">Confirm</string>
+    <string name="back">Back button</string>
+    <string name="email">Email</string>
+    <string name="email_test">123@gmail.com</string>
 </resources>

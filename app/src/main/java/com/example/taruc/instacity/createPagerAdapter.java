@@ -3,7 +3,6 @@ package com.example.taruc.instacity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 
 public class createPagerAdapter extends FragmentStatePagerAdapter {
     int NumOfTabs;
@@ -23,7 +22,7 @@ public class createPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0: return new createFragment();
-            case 1: return new eventFragment();
+            case 1: return new create_eventFragment();
             default: return null;
         }
     }
